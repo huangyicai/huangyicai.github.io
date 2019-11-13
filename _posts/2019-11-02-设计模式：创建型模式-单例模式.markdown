@@ -3,7 +3,7 @@ layout:     post
 title:      "创建型模式-单例模式"
 subtitle:   "设计模式"
 date:       2019-11-05 12:13:00
-author:     "huangyicai"
+author:     "黄益财"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
@@ -48,11 +48,11 @@ tags:
 ## 三、单例模式的实现方式
 
 #### 1.饿汉模式（线程安全）
->饿汉式单例模式在类加载时完成了初始化，所以类加载较慢，如果不使用的浪费内存空间，但获取对象的速度快。
+>饿汉式单例模式在类加载时完成了初始化，所以类加载较慢，如果不使用的浪费内存空间，但获取对象的速度快(空间换时间)。
 
 ```java
 public class SingletonDemo {
-    private static SingletonDemo instance=new SingletonDemo();
+    private static SingletonDemo instance = new SingletonDemo();
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
         return instance;
@@ -69,8 +69,8 @@ public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
-        if(instance==null){
-            instance=new SingletonDemo();
+        if(instance == null){
+            instance = new SingletonDemo();
         }
         return instance;
     }
@@ -85,8 +85,8 @@ public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
     public static synchronized SingletonDemo getInstance(){   //加锁 synchronized修饰方法
-        if(instance==null){
-            instance=new SingletonDemo();
+        if(instance == null){
+            instance = new SingletonDemo();
         }
         return instance;
     }
@@ -101,17 +101,17 @@ public class SingletonDemo {
 3. 线程A进入下一判断，因为单例还没有实例化，所以进行单例实例化，成功实例化后退出代码块，解除锁定。
 4. 线程B进入接下来代码块，锁定线程，进入下一判断，因为已经实例化，退出代码块，解除锁定。
 
-**理论上双重校验锁法是线程安全的，并且，这种方法实现了lazyloading。**
+**理论上双重校验锁法是线程安全的，并且，这种方法实现了lazyloading（时间换空间）。**
 
 ```java
 public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
-        if(instance==null){
+        if(instance == null){
             synchronized (SingletonDemo.class){
-                if(instance==null){
-                    instance=new SingletonDemo();
+                if(instance == null){
+                    instance = new SingletonDemo();
                 }
             }
         }
@@ -124,7 +124,7 @@ public class SingletonDemo {
 
 **对于4中双重校验这种可能出现的问题：**
 
-- **实例化对象的那行代码`instance=new SingletonDemo()`，实际上可以分解成以下三个步骤：**
+- **实例化对象的那行代码`instance = new SingletonDemo()`，实际上可以分解成以下三个步骤：**
 
 1. 分配内存空间
 2. 初始化对象
@@ -144,10 +144,10 @@ public class SingletonDemo {
     private volatile static SingletonDemo instance; //volatile关键字的一个作用是禁止指令重排
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
-        if(instance==null){
+        if(instance == null){
             synchronized (SingletonDemo.class){
-                if(instance==null){
-                    instance=new SingletonDemo();
+                if(instance == null){
+                    instance = new SingletonDemo();
                 }
             }
         }
@@ -166,7 +166,7 @@ public class SingletonDemo {
         return SingletonHolder.instance;
     }
     private static class SingletonHolder{  //静态类内部
-        private static SingletonDemo instance=new SingletonDemo();
+        private static SingletonDemo instance = new SingletonDemo();
     }
 }
 ```
