@@ -50,7 +50,7 @@ tags:
 #### 1.饿汉模式（线程安全）
 >饿汉式单例模式在类加载时完成了初始化，所以类加载较慢，如果不使用的浪费内存空间，但获取对象的速度快。
 
-```
+```java
 public class SingletonDemo {
     private static SingletonDemo instance=new SingletonDemo(); //创建私有并静态的本类对象
     private SingletonDemo(){}                                  //私有化构造函数
@@ -64,7 +64,7 @@ public class SingletonDemo {
 >  没有考虑到线程安全，可能存在多个访问者同时访问，并同时构造了多个对象的问题。
 针对懒汉模式线程不安全的问题，我们自然想到了，在getInstance()方法前加锁，于是就有了下面第3种实现。
 
-```
+```java
 public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
@@ -80,7 +80,7 @@ public class SingletonDemo {
 #### 3.懒汉模式（线程安全）
 > 并发其实是一种特殊情况，大多时候这个锁占用的额外资源都浪费了，这种打补丁方式写出来的结构效率很低。
 
-```
+```java
 public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
@@ -103,7 +103,7 @@ public class SingletonDemo {
 
 **理论上双重校验锁法是线程安全的，并且，这种方法实现了lazyloading。**
 
-```
+```java
 public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
@@ -124,7 +124,7 @@ public class SingletonDemo {
 
 **对于4中双重校验这种可能出现的问题：**
 
-- **实例化对象的那行代码（instance=new SingletonDemo()），实际上可以分解成以下三个步骤：**
+- **实例化对象的那行代码`instance=new SingletonDemo()`，实际上可以分解成以下三个步骤：**
 
 1. 分配内存空间
 2. 初始化对象
@@ -137,9 +137,9 @@ public class SingletonDemo {
 3. 初始化对象 (**在这种情况下，线程B对instance的访问，访问的有可能是一个初始化未完成的对象**)
 
 
-- **解决方案是：只需要给instance的声明加上volatile关键字即可，volatile版本如下：**
+- **解决方案是：只需要给instance的声明加上`volatile`关键字即可，volatile版本如下：**
 
-```
+```java
 public class SingletonDemo {
     private volatile static SingletonDemo instance; //volatile关键字的一个作用是禁止指令重排
     private SingletonDemo(){}
@@ -157,9 +157,9 @@ public class SingletonDemo {
 ```
 
 #### 6.静态类内部加载（线程安全）
-**静态内部类不会在单例加载时就加载，而是在调用getInstance()方法时才进行加载，达到了类似懒汉模式的效果，这种方法又是线程安全的**
+**静态内部类不会在单例加载时就加载，而是在调用`getInstance()`方法时才进行加载，达到了类似懒汉模式的效果，这种方法又是线程安全的**
 
-```
+```java
 public class SingletonDemo {
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
@@ -178,7 +178,7 @@ public class SingletonDemo {
 **枚举单例这种方法问世以来，许多分析文章都称它是实现单例的最完美方法——写法超级简单，而且又能解决大部分的问题。
 这种方法虽然很优秀，但是它仍然不是完美的,比如，在需要继承的场景，它就不适用了.**
 
-```
+```java
 public class SingletonDemo {
    private SingletonDemo(){}
    public static SingletonDemo getInstance() {
@@ -196,6 +196,9 @@ public class SingletonDemo {
     }
 }
 ```
+
+## 四、最佳实践
+**单例模式是23个模式中比较简单的模式，应用也非常广泛，如在Spring中，每个Bean默认就是单例的，这样坐的优点是Spring容器可以管理这些Bean的生命周期，决定什么时候创建出来，什么时候销毁，销毁的时候如何处理等等。如果采用非单例模式（Prototype类型），则Bean初始化的管理交友J2EE容器，Spring容器不再跟踪管理Bean的生命周期。**`摘自《设计模式之禅》`
 
 
 
