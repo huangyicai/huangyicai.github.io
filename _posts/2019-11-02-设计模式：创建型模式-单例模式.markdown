@@ -51,13 +51,7 @@ tags:
 >饿汉式单例模式在类加载时完成了初始化，所以类加载较慢，如果不使用的浪费内存空间，但获取对象的速度快。
 
 ```java
-public class SingletonDemo {
-    private static SingletonDemo instance=new SingletonDemo(); //创建私有并静态的本类对象
-    private SingletonDemo(){}                                  //私有化构造函数
-    public static SingletonDemo getInstance(){                 //定义公有并静态的方法，返回该对象
-        return instance;
-    }
-}
+
 ```
 
 #### 2.懒汉模式（线程不安全）
@@ -65,7 +59,7 @@ public class SingletonDemo {
 针对懒汉模式线程不安全的问题，我们自然想到了，在getInstance()方法前加锁，于是就有了下面第3种实现。
 
 ```java
-public class SingletonDemo {
+public class SingletonDemo {
     private static SingletonDemo instance;
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
@@ -140,7 +134,7 @@ public class SingletonDemo {
 - **解决方案是：只需要给instance的声明加上`volatile`关键字即可，volatile版本如下：**
 
 ```java
-public class SingletonDemo {
+public class SingletonDemo {
     private volatile static SingletonDemo instance; //volatile关键字的一个作用是禁止指令重排
     private SingletonDemo(){}
     public static SingletonDemo getInstance(){
@@ -179,8 +173,8 @@ public class SingletonDemo {
 这种方法虽然很优秀，但是它仍然不是完美的,比如，在需要继承的场景，它就不适用了.**
 
 ```java
-public class SingletonDemo {
-   private SingletonDemo(){}
+public class SingletonDemo {
+   private SingletonDemo(){}
    public static SingletonDemo getInstance() {
         return Singleton.INSTANCE.getSingle();
     }
