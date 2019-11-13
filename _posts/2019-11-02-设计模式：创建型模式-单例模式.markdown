@@ -51,7 +51,13 @@ tags:
 >饿汉式单例模式在类加载时完成了初始化，所以类加载较慢，如果不使用的浪费内存空间，但获取对象的速度快。
 
 ```java
-
+public class SingletonDemo {
+    private static SingletonDemo instance=new SingletonDemo();
+    private SingletonDemo(){}
+    public static SingletonDemo getInstance(){
+        return instance;
+    }
+}
 ```
 
 #### 2.懒汉模式（线程不安全）
