@@ -1,0 +1,33 @@
+---
+layout:     post
+title:      "Java各内存区域溢出异常"
+subtitle:   "JVM"
+date:       2019-11-13 10:23:00
+author:     "黄益财"
+header-img: "img/post-bg-css.jpg"
+catalog: true
+tags:
+    - java基础
+    - JVM
+---
+
+> “Yeah It's on. ”
+
+Java各内存区域溢出异常
+
+
+---
+
+> 参考文献：《深入理解Java虚拟机》-周志明 著
+
+
+
+
+
+
+
+
+
+
+
+
