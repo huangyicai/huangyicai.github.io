@@ -10,7 +10,7 @@ tags:
     - JVM
 ---
 
-> “Yeah It's on. ”
+> “Our destiny offers not the cup of despair, but the chalice of opportunity. So let us seize it, not in fear, but in gladness. -- R.M. Nixon”
 
 Java各内存区域溢出异常
 
